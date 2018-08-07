@@ -158,7 +158,6 @@ void loop() {
 
         // Create our own json string instead of including a library
         String request_data = "{\"ref_epoch\": " + String(ref_epoch_updated);
-        request_data += ", \"ref_millis\": " + String(ref_epoch_updated_millis);
         request_data += ", \"pulses\": \"" + pulses + "\"}";
 
         config.debug("MQTT Publish /power-meter");
