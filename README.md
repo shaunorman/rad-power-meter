@@ -82,8 +82,8 @@ My code for this little project can be found [here](https://github.com/shaunorma
 
 And [the code](https://github.com/shaunorman/rad-power-meter/blob/master/src/main.cpp) which does pretty much everything on the NodeMCU.
 
-[Wiring to the power box](https://i.imgur.com/fYXiTmu.jpg)
+![Wiring to the power box](https://i.imgur.com/fYXiTmu.jpg)
 
-[](https://i.imgur.com/kfwZbuj.jpg)
+![](https://i.imgur.com/kfwZbuj.jpg)
 
 
