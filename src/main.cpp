@@ -35,7 +35,7 @@
 #include <RadHelpers.h>
 #include <RadWiFi.h>
 #include <RadMQTT.h>
-
+#include <RadHeartbeat.h>
 
 
 //
@@ -93,6 +93,8 @@ RadMQTT mqtt(config);
 WiFiUDP ntpUDP;
 NTPClient time_client(ntpUDP, "0.au.pool.ntp.org", 0, ref_updated_every_ms);
 
+RadHeartbeat heartbeat(config);
+
 
 // This interrupt fires for both when the sensor turns on, and when it turns off.
 void interrupt_watt() {
@@ -109,30 +111,28 @@ void interrupt_watt() {
         }
         else {
             watt_led_on = false;
-            digitalWrite(LED_BUILTIN, HIGH);
         }
     }
 }
 
 void setup() {
-    pinMode(D4, OUTPUT);
-    pinMode(LDR_pin, INPUT);
-
-    config.debug_on();
-
     Serial.begin(115200);
     delay(2500);
+
+    pinMode(LDR_pin, INPUT);
+    attachInterrupt(digitalPinToInterrupt(LDR_pin), interrupt_watt, CHANGE);
+
+    config.debug_on();
 
     wifi.connect();
 
     time_client.begin();
-
-    attachInterrupt(digitalPinToInterrupt(LDR_pin), interrupt_watt, CHANGE);
 }
 
 void loop() {
     wifi.loop();
     mqtt.loop();
+    heartbeat.loop();
 
     // Update time via NTP every "ref_updated_every_ms"
     // But do not update if we have anything in the history log as we are using the last time
